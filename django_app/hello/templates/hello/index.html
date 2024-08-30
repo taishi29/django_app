@@ -10,12 +10,12 @@
 
 <body class="container">
     <h1 class="display-4 text-primary">{{title}}</h1>
-    <p class="h6 my-3"> {{msg}} </p>
-    <form action="{% url 'form' %}" method="post">
-    {% csrf_token %}
-        <label for='msg' class="form-label">message: </label>
-        <input id='msg' type="text" name="msg" class="form-control">
-        <input type="submit" value="click" class="btn btn-primary">
+    <p class='h5 mt-4'>{{message|safe}}</p>
+    <form action="{% url 'index' %}" method="POST">
+        {% csrf_token %}
+        <table>
+            {{ form.as_p }}
+            <input type="submit" class="btn btn-primary my-2" value="click">
     </form>
 </body>
 </html>
