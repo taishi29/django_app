@@ -26,4 +26,18 @@ class HelloView(TemplateView):
         self.params['form'] = SessionForm(request.POST)
         return render(request, 'hello/index.html', self.params)
         
-
+""""
+ミドルウェアとは？
+ミドルウェアは、クライアントからの要求があったあと、
+およびクライアントに返信する前に割り込んで、処理を実行するもの。
+"""
+def sample_middleware(get_response):
+    
+    def middlware(request):
+        counter = request.session.get('counter', 0)
+        request.session['counter'] = counter + 1
+        response = get_response(request)
+        print("count: " + str(counter))
+        return response
+    
+    return middlware
