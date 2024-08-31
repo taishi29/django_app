@@ -1,10 +1,16 @@
 from django import forms
 
-class HelloForm(forms.Form):
-    data = [
-        ('season 1', '賢者の石'),
-        ('season 2', '秘密の部屋'),
-        ('season 3', 'アズカバンの囚人')
-    ] 
-    choice = forms.MultipleChoiceField(label='radio', choices=data, widget=forms.SelectMultiple(attrs={'size':3, 'class':'form-select'}))
-    
+class SessionForm(forms.Form):
+    session = forms.CharField(label='session', required=False, \
+        widget=forms.TextInput(attrs={'class':'form-control'}))
+
+"""    
+【CharField】
+ユーザーにテキストを入力させるためのフォームフィールドを作成する。テキストボックスとしてHTMLにレンダリングされる。
+【widget】
+フィールドがどのように表示されるかを指定するもの。widget=forms.TextInputとすることで、CharFieldがテキスト入力フィールド
+<input type="text">としてレンダリングされるようになる(そもそも、CharField自体、デフォルトでそうなっているが)。widgetを指定することで、フィールドのHTMLタグの形や属性をカスタマイズすることができる。
+【attrs】
+ウィジェットに対して追加のHTML属性を指定するための辞書型の引数。
+例えば、class属性を設定してCSSスタイルを適用したり、placeholder属性を設定して入力フィールドにヒントテキストを表示することができる。
+"""
