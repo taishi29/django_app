@@ -11,14 +11,7 @@
 <body class="container">
     <h1 class="display-4 text-primary">{{title}}</h1>
     <table class="table">
-        <tr>
-            <th>data</th>
-        </tr>
-    {% for item in data %}
-        <tr>
-            <td>{{item}}</id>
-        </tr>
-    {% endfor %}
-    </table>
+        {{data|safe}}
+    </table>    
 </body>
 </html>

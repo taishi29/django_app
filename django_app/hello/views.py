@@ -1,12 +1,21 @@
 from django.shortcuts import render
 from .models import Friend
-from .forms import HelloForm
+from django.db.models import QuerySet
+
+
+def __new_str__(self):
+    result = ''
+    for item in self:
+        result += '<tr>'
+        for k in item:
+            result += '<td>' + str(k) + '=' + str(item[k]) + '</td>'
+        result += '</tr>'
+    return result 
+
+QuerySet.__str__ = __new_str__
 
 def index(request):
-    num = Friend.objects.all().count()
-    first = Friend.objects.all().first()
-    last = Friend.objects.all().last()
-    data = [num, first, last]
+    data = Friend.objects.all().values('id', 'name', 'age')
     params = {
         'title':'Hello',
         'data': data,
@@ -14,8 +23,11 @@ def index(request):
     return render(request, 'hello/index.html', params)
 
 '''
-all():QuerySetというクラスのインスタンスとしてレコードの値が取り出される。
-count()メソッド:取得したレコードの数を返す
-first()メソッド:allの中の、最初のものだけを返す
-last()メソッド:allの中の、最後のものだけを返す
+__str__とは、Pythonにおいてオブジェクトを文字列として表示する際に呼び出される特殊メソッドである。
+例えば、print()関数を使ってオブジェクトを出力する場合や、str()関数でオブジェクトを文字列に変換する際に、
+__str__メソッドが自動的に呼ばれる。
+具体的には、print()関数やstr()関数を使ってオブジェクトを文字列として表示しようとすると、
+この__str__メソッドが呼び出され、そのオブジェクトがどのように文字列として表示されるかが定義されている。
+
+このカスタムメソッド__new_str__は、QuerySetオブジェクトをHTMLのテーブル形式で表示しようとしている。
 '''
