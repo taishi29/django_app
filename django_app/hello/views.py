@@ -3,7 +3,7 @@ from .models import Friend
 from .forms import HelloForm
 
 def index(request):
-    data = Friend.objects.all().values()
+    data = Friend.objects.all().values('id', 'name')
     params = {
         'title':'Hello',
         'data': data,
@@ -22,5 +22,5 @@ def index(request):
 表示されるのはクエリセット全体を簡素に文字列化したもの
 
 ここで！
-value()メソッドを使うと、レコードの値だけを取り出すことができる。
+value()メソッドを使うと、レコードの値だけを(キーと値を辞書型として)取り出すことができる。
 '''
