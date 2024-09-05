@@ -4,21 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <title>{{title}}</title>
-    <!--CSS only-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap/dist/css/bootstrap.css" rel="stylesheet" crossorigin="anonymous">
 </head>
 
 <body class="container">
     <h1 class="display-4 text-primary">{{title}}</h1>
-    <table class="table">
-        <tr>
-            <th>data</th>
-        </tr>
-    {% for item in data %}
-        <tr>
-            <td>{{item}}</td>
-        </tr>
-    {% endfor %}
-    </table>    
+    <form action="{% url "create" %}" method="post">
+    {% csrf_token %} 
+    {{ form.as_p }}
+    <input type="submit" value="click">
+    </form>
 </body>
 </html>
