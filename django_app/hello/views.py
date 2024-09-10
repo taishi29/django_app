@@ -23,6 +23,21 @@ def create(request):
     }
     return render(request, 'hello/create.html', params)
 
+def edit(request, num):
+    obj = Friend.objects.get(id=num)
+    if (request.method == 'POST'):
+        friend = FriendForm(request.POST, instance=obj)
+        friend.save()
+        return redirect(to='/hello')
+    params = {
+        'title':'Hello',
+        'id': num,
+        'form':FriendForm(instance=obj),
+        ## instance=obj をフォームに渡すことで、そのインスタンスに含まれるデータがフォームの初期値として表示されます。
+    }
+    return render(request, 'hello/edit.html', params)
+
+    
 '''
 Friend()で、Friendモデルのインスタンスを作成。
 FriendFormを使って、request.POSTをFriendインスタンスに設定する。
