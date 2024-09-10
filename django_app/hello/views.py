@@ -37,7 +37,18 @@ def edit(request, num):
     }
     return render(request, 'hello/edit.html', params)
 
-    
+def delete(request, num):
+    friend = Friend.objects.get(id=num)
+    if (request.method == 'POST'):
+        friend.delete()
+        return redirect(to='/hello')
+    params = {
+        'title':'Hello',
+        'id': num,
+        'obj': friend,
+        ## instance=obj をフォームに渡すことで、そのインスタンスに含まれるデータがフォームの初期値として表示されます。
+    }
+    return render(request, 'hello/delete.html', params)
 '''
 Friend()で、Friendモデルのインスタンスを作成。
 FriendFormを使って、request.POSTをFriendインスタンスに設定する。
