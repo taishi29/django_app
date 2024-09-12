@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from .models import Friend
 from .forms import FriendForm
+from django.views.generic import ListView
+from django.views.generic import DetailView
 
 def index(request):
     data = Friend.objects.all().values()
@@ -49,6 +51,14 @@ def delete(request, num):
         ## instance=obj をフォームに渡すことで、そのインスタンスに含まれるデータがフォームの初期値として表示されます。
     }
     return render(request, 'hello/delete.html', params)
+
+class FriendList(ListView):
+    model = Friend
+
+class FriendDetail(DetailView):
+    model = Friend
+    
+    
 '''
 Friend()で、Friendモデルのインスタンスを作成。
 FriendFormを使って、request.POSTをFriendインスタンスに設定する。

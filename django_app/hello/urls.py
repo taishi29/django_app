@@ -1,17 +1,24 @@
 from django.urls import path
 from . import views
+from .views import FriendList
+from .views import FriendDetail
 
 urlpatterns = [
     path('', views.index, name='index'),
     path('create', views.create, name='create'),
     path('edit/<int:num>', views.edit, name='edit'),
     path('delete/<int:num>', views.delete, name='delete'),
+    path('list', FriendList.as_view()),
+    path('detail/<int:pk>', FriendDetail.as_view()),
 ]
 
 '''
-・<int:num> は、DjangoのURLパターンにおけるパスコンバーターです。
-・これは、URLの一部を整数としてキャプチャし、その値を num という引数としてビュー関数に渡します。
-・この書き方はDjango独自のものであり、Python標準の文法ではありません。
-・Djangoには他にもstr、slug、uuid、pathなどのパスコンバーターがあります。
-このように、DjangoのURLパターンでパスコンバーターを使うと、URL内の動的な部分（数値や文字列など）をビューに渡して処理することが簡単にできます。
+as_view() を呼び出すと、Djangoがクラスを関数のように扱えるように変換します。
+FriendListView.as_view()を使うことで、Djangoは「GETリクエストが来たらどのメソッドを実行するか」や「POSTリクエストが来たらどうするか」といった動作を自動で処理してくれます。
+
+まとめると：
+URLパターン：http://localhost:8000/hello/list にアクセスすると、
+ビュー：FriendList クラスが呼び出され、
+データ：Friend モデルの全データを取得して、
+テンプレート：friend_list.html が自動的に表示されます。
 '''
