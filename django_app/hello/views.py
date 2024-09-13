@@ -4,6 +4,7 @@ from .models import Friend
 from .forms import FriendForm
 from django.views.generic import ListView
 from django.views.generic import DetailView
+from .forms import FindForm
 
 def index(request):
     data = Friend.objects.all().values()
@@ -58,7 +59,24 @@ class FriendList(ListView):
 class FriendDetail(DetailView):
     model = Friend
     
-    
+def find(request):
+    if(request.method == 'POST'):
+        form = FindForm(request.POST)
+        find = request.POST['find']
+        data = Friend.objects.filter(name=find)
+        msg = 'Result: ' + str(data.count())
+    else:
+        msg = 'search words...'
+        form = FindForm()
+        data = Friend.objects.all()
+    params = {
+        'title':'Hello',
+        'message':msg,
+        'form':form,
+        'data':data,
+    }
+    return render(request, 'hello/find.html', params)
+
 '''
 Friend()で、Friendモデルのインスタンスを作成。
 FriendFormを使って、request.POSTをFriendインスタンスに設定する。
