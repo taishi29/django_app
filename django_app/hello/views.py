@@ -5,12 +5,16 @@ from .forms import FriendForm
 from django.views.generic import ListView
 from django.views.generic import DetailView
 from .forms import FindForm
+from .forms import CheckForm
+from django.core.paginator import Paginator
 
-def index(request):
-    data = Friend.objects.all().values()
+def index(request, num=1):
+    data = Friend.objects.all()
+    page = Paginator(data, 2)
     params = {
         'title':'Hello',
-        'data': data,
+        'message':'',
+        'data': page.get_page(num),
     }
     return render(request, 'hello/index.html', params)
 
@@ -63,7 +67,7 @@ def find(request):
     if(request.method == 'POST'):
         form = FindForm(request.POST)
         find = request.POST['find']
-        data = Friend.objects.filter(name__contains=find)
+        data = Friend.objects.filter(age__lte=int(find))
         msg = 'Result: ' + str(data.count())
     else:
         msg = 'search words...'
@@ -76,6 +80,22 @@ def find(request):
         'data':data,
     }
     return render(request, 'hello/find.html', params)
+
+def check(request):
+    params = {
+        'title': 'Hello',
+        'message': 'check validation.',
+        'form': CheckForm(),
+    }
+    if request.method == "POST":
+        form = CheckForm(request.POST)
+        params['form'] = form
+        if form.is_valid(): 
+            params['message'] = 'OK!'
+        else:
+            params['message'] = 'no good.'
+    return render(request, 'hello/check.html', params)
+
 
 '''
 Friend()で、Friendモデルのインスタンスを作成。
