@@ -1,28 +1,31 @@
 {% extends "sns/layout.html" %}
 
-{% block title %}Post{% endblock title %}
+{% block title %}
+  Post
+{% endblock title %}
 
 {% block header %}
-<h1 class="display-4 text-primary">Post</h1>
-<p class="caption">※メッセージを投稿します。</p>
+  <h1 class="display-4 text-primary">Post</h1>
+  <p class="caption">※メッセージを投稿します。</p>
 {% endblock header %}
 
 {% block content %}
-<table class="table mt-3">
-    <tr><th>Messages</th></tr>
-{% for item in contents %}
-    <tr><td>
-        <p class="fs-5 my-0">
-            {{item.content}}
-        </p>
-        <p class="text-end my-0">
-            ({{item.pub_date}})
-        </p>
-        <p class="text-end my-0 text-info">
-            good={{item.good_count}}
-        </p>
-    </tr></td>
-{% endfor %}
-</table>
+  <table class="table mt-3">
+    <thead>
+      <tr>
+        <th>Messages</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in contents %}
+      <tr>
+        <td>
+          <p class="fs-5 my-0">{{ item.content }}</p>
+          <p class="text-end my-0">({{ item.pub_date }})</p>
+          <p class="text-end my-0 text-info">good = {{ item.good_count }}</p>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 {% endblock content %}
-

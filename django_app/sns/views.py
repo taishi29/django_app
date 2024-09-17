@@ -28,7 +28,7 @@ def index(request, page=1):
     return render(request, 'sns/index.html', params)
 
 # goodsのビュー関数
-@login_required(login_url='admin/login/')
+@login_required(login_url='/admin/login/')
 def goods(request):
     goods = Good.objects.filter(owner=request.user).all()
     
@@ -56,7 +56,7 @@ def post(request):
         message = Message.objects.filter(owner=request.user).all()
         params = {
             'login_user':request.user,
-            'contents':messages,
+            'contents':message,
         }
         return render(request, 'sns/post.html', params)
     

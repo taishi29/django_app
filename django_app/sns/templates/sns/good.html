@@ -1,18 +1,29 @@
-{% extends "sns/layout.html" %} {% block title %}Goods{% endblock title %} {%
-block header %}
-<h1 class="display-4 text-primary">Goods</h1>
-<p class="caption">※Goodしたメッセージ</p>
-{% endblock header %} {% block content %}
-<table class="table mt-3">
-  <tr>
-    <th>Messages</th>
-  </tr>
-  {% for item in contents %}
-  <tr>
-    <td>
-      <p class="fs-5">{{item}}</p>
-    </td>
-  </tr>
-  {% endfor %}
-</table>
+{% extends "sns/layout.html" %}
+
+{% block title %}
+  Goods
+{% endblock title %}
+
+{% block header %}
+  <h1 class="display-4 text-primary">Goods</h1>
+  <p class="caption">※Goodしたメッセージ</p>
+{% endblock header %}
+
+{% block content %}
+  <table class="table mt-3">
+    <thead>
+      <tr>
+        <th>Messages</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in contents %}
+      <tr>
+        <td>
+          <p class="fs-5">{{ item }}</p>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 {% endblock content %}
