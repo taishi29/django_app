@@ -12,7 +12,7 @@ from .forms import PostForm
 
 # indexのビュー関数
 @login_required(login_url='/admin/login/')
-def inde(request, page=1):
+def index(request, page=1):
     max = 10
     form = PostForm(request.user)
     msgs = Message.objects.all()
